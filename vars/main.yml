@@ -1,11 +1,11 @@
 ---
+__ansible_role_conf_dir: /etc/{{ ansible_role_name }}
+
 __apt_daily_timer_systemd_dir: /etc/systemd/system/apt-daily.timer.d
 
 __apt_daily_upgrade_timer_systemd_dir: /etc/systemd/system/apt-daily-upgrade.timer.d
 
-__unattended_upgrade_tmp_conf_dir: /var/tmp/{{ ansible_role_name }}
-
-__unattended_upgrade_tmp_conf_file: "{{ __unattended_upgrade_tmp_conf_dir }}/90{{ ansible_role_name | replace('.', '-') }}-raw"
+__unattended_upgrade_tmp_conf_file: "{{ __ansible_role_conf_dir }}/90{{ ansible_role_name | replace('.', '-') }}-raw"
 
 __unattended_upgrade_conf_file: /etc/apt/apt.conf.d/90{{ ansible_role_name | replace('.', '-') }}
 

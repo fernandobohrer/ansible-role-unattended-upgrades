@@ -34,9 +34,9 @@
     - apt-daily.timer
     - apt-daily-upgrade.timer
 
-- name: Ensure temporary configuration directory exists
+- name: Ensure ansible role configuration directory exists
   ansible.builtin.file:
-    path: "{{ __unattended_upgrade_tmp_conf_dir }}"
+    path: "{{ __ansible_role_conf_dir }}"
     state: directory
     owner: root
     group: root
