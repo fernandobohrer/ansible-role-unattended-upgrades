@@ -1,0 +1,42 @@
+---
+__apt_daily_timer_systemd_dir: /etc/systemd/system/apt-daily.timer.d
+
+__apt_daily_upgrade_timer_systemd_dir: /etc/systemd/system/apt-daily-upgrade.timer.d
+
+__unattended_upgrade_tmp_conf_dir: /var/tmp/{{ ansible_role_name }}
+
+__unattended_upgrade_tmp_conf_file: "{{ __unattended_upgrade_tmp_conf_dir }}/90{{ ansible_role_name | replace('.', '-') }}-raw"
+
+__unattended_upgrade_conf_file: /etc/apt/apt.conf.d/90{{ ansible_role_name | replace('.', '-') }}
+
+__unattended_upgrade_generic_options:
+  - Acquire::http::Dl-Limit
+  - Dpkg::Options
+  - Unattended-Upgrade::Allow-APT-Mark-Fallback
+  - Unattended-Upgrade::Allow-downgrade
+  - Unattended-Upgrade::Allowed-Origins
+  - Unattended-Upgrade::AutoFixInterruptedDpkg
+  - Unattended-Upgrade::Automatic-Reboot
+  - Unattended-Upgrade::Automatic-Reboot-Time
+  - Unattended-Upgrade::Automatic-Reboot-WithUsers
+  - Unattended-Upgrade::Debug
+  - Unattended-Upgrade::DevRelease
+  - Unattended-Upgrade::InstallOnShutdown
+  - Unattended-Upgrade::Keep-Debs-After-Install
+  - Unattended-Upgrade::Mail
+  - Unattended-Upgrade::MailReport
+  - Unattended-Upgrade::MinimalSteps
+  - Unattended-Upgrade::OnlyOnACPower
+  - Unattended-Upgrade::Origins-Pattern
+  - Unattended-Upgrade::Package-Blacklist
+  - Unattended-Upgrade::Package-Whitelist
+  - Unattended-Upgrade::Package-Whitelist-Strict
+  - Unattended-Upgrade::Remove-New-Unused-Dependencies
+  - Unattended-Upgrade::Remove-Unused-Dependencies
+  - Unattended-Upgrade::Remove-Unused-Kernel-Packages
+  - Unattended-Upgrade::Sender
+  - Unattended-Upgrade::Skip-Updates-On-Metered-Connections
+  - Unattended-Upgrade::SyslogEnable
+  - Unattended-Upgrade::SyslogFacility
+  - Unattended-Upgrade::Update-Days
+  - Unattended-Upgrade::Verbose

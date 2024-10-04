@@ -1,0 +1,7 @@
+---
+__unattended_upgrade_allowed_origins:
+  - ${distro_id}:${distro_codename}-security
+
+__unattended_upgrade_specific_options:
+  - Unattended-Upgrade::Allowed-Origins
+  - Unattended-Upgrade::DevRelease

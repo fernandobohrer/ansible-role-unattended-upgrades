@@ -1,0 +1,87 @@
+---
+- name: Ensure apt-daily.timer syntax is valid
+  ansible.builtin.command: systemd-analyze calendar {{ apt_daily_timer_on_calendar }}
+  register: apt_daily_timer_test
+  changed_when: apt_daily_timer_test.rc != 0
+
+- name: Ensure apt-daily-upgrade.timer syntax is valid
+  ansible.builtin.command: systemd-analyze calendar {{ apt_daily_upgrade_timer_on_calendar }}
+  register: apt_daily_upgrade_timer_test
+  changed_when: apt_daily_upgrade_timer_test.rc != 0
+
+- name: Set distribution-specific variables
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - vars/{{ ansible_distribution | lower }}-{{ ansible_distribution_major_version }}.yml
+        - vars/{{ ansible_distribution | lower }}-{{ ansible_distribution_version | replace('.', '') }}.yml
+      skip: false
+
+- name: Ensure unattended-upgrades package is installed
+  ansible.builtin.apt:
+    name: unattended-upgrades
+    state: present
+    update_cache: true
+    cache_valid_time: "{{ apt_cache_valid_time }}"
+
+- name: Ensure apt-daily and apt-daily-upgrade timers are started and enabled
+  ansible.builtin.systemd:
+    name: "{{ item }}"
+    state: started
+    enabled: true
+    daemon_reload: true
+  with_items:
+    - apt-daily.timer
+    - apt-daily-upgrade.timer
+
+- name: Ensure temporary configuration directory exists
+  ansible.builtin.file:
+    path: "{{ __unattended_upgrade_tmp_conf_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "755"
+
+- name: Deploy configuration file
+  ansible.builtin.template:
+    src: unattended-upgrades.j2
+    dest: "{{ __unattended_upgrade_tmp_conf_file }}"
+    owner: root
+    group: root
+    mode: "644"
+
+- name: Ensure unattended-upgrades is configured
+  ansible.builtin.shell:
+    executable: /bin/bash
+    cmd: |
+      TMP_FILE=$(mktemp)
+      cat -s {{ __unattended_upgrade_tmp_conf_file }} > $TMP_FILE
+      cat $TMP_FILE > {{ __unattended_upgrade_conf_file }}
+      rm -rf $TMP_FILE
+  changed_when: false
+
+- name: Ensure systemd timers directories exist
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "755"
+  with_items:
+    - "{{ __apt_daily_timer_systemd_dir }}"
+    - "{{ __apt_daily_upgrade_timer_systemd_dir }}"
+
+- name: Override systemd timers configuration
+  ansible.builtin.template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dst }}"
+    owner: root
+    group: root
+    mode: "644"
+    backup: false
+  with_items:
+    - { src: apt-daily.timer.j2, dst: "{{ __apt_daily_timer_systemd_dir }}/{{ ansible_role_name }}.conf" }
+    - { src: apt-daily-upgrade.timer.j2, dst: "{{ __apt_daily_upgrade_timer_systemd_dir }}/{{ ansible_role_name }}.conf" }
+  notify:
+    - Restart apt-daily.timer
+    - Restart apt-daily-upgrade.timer
