@@ -1,11 +1,11 @@
 ---
 - name: Ensure apt-daily.timer syntax is valid
-  ansible.builtin.command: systemd-analyze calendar {{ apt_daily_timer_on_calendar }}
+  ansible.builtin.command: systemd-analyze calendar "{{ apt_daily_timer_on_calendar }}"
   register: apt_daily_timer_test
   changed_when: apt_daily_timer_test.rc != 0
 
 - name: Ensure apt-daily-upgrade.timer syntax is valid
-  ansible.builtin.command: systemd-analyze calendar {{ apt_daily_upgrade_timer_on_calendar }}
+  ansible.builtin.command: systemd-analyze calendar "{{ apt_daily_upgrade_timer_on_calendar }}"
   register: apt_daily_upgrade_timer_test
   changed_when: apt_daily_upgrade_timer_test.rc != 0
 

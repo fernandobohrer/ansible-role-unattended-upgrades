@@ -5,10 +5,20 @@ apt_cache_valid_time: 3600
 
 # apt-daily.timer
 apt_daily_timer_on_calendar: "*-*-* 06,18:00"
+# Systemd timers support an optional timezone parameter. This can be helpful
+# if your distribution is configured to use the UTC timezone but you want to
+# ensure that the timers are triggered based on your local time.
+# See the example below:
+# apt_daily_timer_on_calendar: "*-*-* 06,18:00 America/Sao_Paulo"
 apt_daily_timer_randomized_delay_sec: 12h
 
 # apt-daily-upgrade.timer
 apt_daily_upgrade_timer_on_calendar: "*-*-* 06:00"
+# Systemd timers support an optional timezone parameter. This can be helpful
+# if your distribution is configured to use the UTC timezone but you want to
+# ensure that the timers are triggered based on your local time.
+# See the example below:
+# apt_daily_upgrade_timer_on_calendar: "*-*-* 06:00 America/Sao_Paulo"
 apt_daily_upgrade_timer_randomized_delay_sec: 60m
 
 # +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
