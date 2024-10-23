@@ -17,6 +17,16 @@
         - vars/{{ ansible_distribution | lower }}-{{ ansible_distribution_version | replace('.', '') }}.yml
       skip: false
 
+- name: Ensure distro-info-data and python3-distro-info are up to date
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    state: latest
+    update_cache: true
+    cache_valid_time: "{{ apt_cache_valid_time }}"
+  with_items:
+    - distro-info-data
+    - python3-distro-info
+
 - name: Ensure unattended-upgrades package is installed
   ansible.builtin.apt:
     name: unattended-upgrades
