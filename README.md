@@ -1,6 +1,6 @@
 # Ansible Role: unattendedupgrades
 
-An Ansible role that deploys and configures the unattendedupgrades package so that security updates are automatically installed on Linux boxes.
+An Ansible role that deploys and configures the `unattendedupgrades` package so that security updates are automatically installed on Linux boxes.
 
 ## 🚀 Motivation
 
