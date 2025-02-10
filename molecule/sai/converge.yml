@@ -4,5 +4,7 @@
   become: true
   gather_facts: true
 
-  roles:
-    - ansible-role-unattended-upgrades
+  tasks:
+    - name: Apply role
+      ansible.builtin.include_role:
+        name: ansible-role-unattended-upgrades
