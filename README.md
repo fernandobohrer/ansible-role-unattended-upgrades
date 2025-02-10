@@ -1,6 +1,6 @@
-# Ansible Role: unattendedupgrades
+# Ansible Role: unattended_upgrades
 
-An Ansible role that deploys and configures the `unattendedupgrades` package so that security updates are automatically installed on Linux boxes.
+An Ansible role that deploys and configures the `unattended-upgrades` package so that security updates are automatically installed on Linux boxes.
 
 ## 🚀 Motivation
 
@@ -8,7 +8,7 @@ Keeping track and installing security updates and patches can be challenging. It
 
 ## 📑 Role Variables
 
-Check `defaults/main.yml`.
+Check [here][01].
 
 ## 🧰 Dependencies
 
@@ -20,28 +20,28 @@ An example of how integrate this role to an Ansible playbook can be found here:
 
 ```yml
 ---
-- name: Deploy unattendedupgrades
+- name: Deploy unattended-upgrades
   hosts: all
   become: true
   gather_facts: true
   roles:
-    - fernandobohrer.unattendedupgrades
+    - fernandobohrer.unattended_upgrades
 ```
 
 If you want to install the security patches between 0500 and 0600 AM and automatically restart the machines if required, use the example below instead:
 
 ```yml
 ---
-- name: Deploy unattendedupgrades
+- name: Deploy unattended-upgrades
   hosts: all
   become: true
   gather_facts: true
   vars:
-    unattended_upgrade_automatic_reboot: true
-    apt_daily_upgrade_timer_on_calendar: "*-*-* 05:00"
-    apt_daily_upgrade_timer_randomized_delay_sec: 60m
+    untnd_pgrds__automatic_reboot: true
+    untnd_pgrds__apt_daily_upgrade_timer_randomized_delay: 60m
+    untnd_pgrds__apt_daily_upgrade_timer_on_calendar: "*-*-* 05:00"
   roles:
-    - fernandobohrer.unattendedupgrades
+    - fernandobohrer.unattended_upgrades
 ```
 
 ## ⚙️ Compatibility
@@ -52,7 +52,7 @@ This role was tested on and is confirmed to work with the following Linux distri
 - `Ubuntu 22.04`
 - `Ubuntu 24.04`
 
-Details can be found in the [Molecule][01] scenarios available in the `molecule` folder.
+Details can be found in the [Molecule][02] scenarios available in the `molecule` folder.
 
 ## ⚠️ Warning
 
@@ -62,7 +62,8 @@ With the above in mind, it is **imperative** that you familiarize yourself with 
 
 ## 📝 License
 
-This project is licensed under the terms of the [MIT license][02].
+This project is licensed under the terms of the [MIT license][03].
 
-[01]: https://github.com/fernandobohrer/ansible-molecule-scenarios
-[02]: /LICENSE
+[01]: defaults/main.yml
+[02]: https://github.com/fernandobohrer/ansible-molecule-scenarios
+[03]: /LICENSE
