@@ -1,15 +1,22 @@
 ---
-__ansible_role_conf_dir: /etc/{{ ansible_role_name }}
+__untnd_pgrds__role_dependencies:
+  - unattended-upgrades
 
-__apt_daily_timer_systemd_dir: /etc/systemd/system/apt-daily.timer.d
+__untnd_pgrds__role_dependencies_latest:
+  - distro-info-data
+  - python3-distro-info
 
-__apt_daily_upgrade_timer_systemd_dir: /etc/systemd/system/apt-daily-upgrade.timer.d
+__untnd_pgrds__ansible_role_conf_dir: /etc/{{ ansible_role_name }}
 
-__unattended_upgrade_tmp_conf_file: "{{ __ansible_role_conf_dir }}/90{{ ansible_role_name | replace('.', '-') }}-raw"
+__untnd_pgrds__apt_daily_timer_systemd_dir: /etc/systemd/system/apt-daily.timer.d
 
-__unattended_upgrade_conf_file: /etc/apt/apt.conf.d/90{{ ansible_role_name | replace('.', '-') }}
+__untnd_pgrds__apt_daily_upgrade_timer_systemd_dir: /etc/systemd/system/apt-daily-upgrade.timer.d
 
-__unattended_upgrade_generic_options:
+__untnd_pgrds__conf_file: /etc/apt/apt.conf.d/90{{ ansible_role_name | replace('.', '-') }}
+
+__untnd_pgrds__tmp_conf_file: "{{ __untnd_pgrds__ansible_role_conf_dir }}/90{{ ansible_role_name | replace('.', '-') }}-raw"
+
+__untnd_pgrds__generic_options:
   - Acquire::http::Dl-Limit
   - Dpkg::Options
   - Unattended-Upgrade::Allow-APT-Mark-Fallback

@@ -1,25 +1,27 @@
 ---
+# Update the apt cache if it is older than the apt_cache_valid_time value.
+# Option set in seconds.
 apt_cache_valid_time: 3600
 
 # +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
 # apt-daily.timer
-apt_daily_timer_on_calendar: "*-*-* 06,18:00"
+untnd_pgrds__apt_daily_timer_on_calendar: "*-*-* 06,18:00"
 # Systemd timers support an optional timezone parameter. This can be helpful
 # if your distribution is configured to use the UTC timezone but you want to
 # ensure that the timers are triggered based on your local time.
 # See the example below:
-# apt_daily_timer_on_calendar: "*-*-* 06,18:00 America/Sao_Paulo"
-apt_daily_timer_randomized_delay_sec: 12h
+# untnd_pgrds__apt_daily_timer_on_calendar: "*-*-* 06,18:00 America/Sao_Paulo"
+untnd_pgrds__apt_daily_timer_randomized_delay: 12h
 
 # apt-daily-upgrade.timer
-apt_daily_upgrade_timer_on_calendar: "*-*-* 06:00"
+untnd_pgrds__apt_daily_upgrade_timer_on_calendar: "*-*-* 06:00"
 # Systemd timers support an optional timezone parameter. This can be helpful
 # if your distribution is configured to use the UTC timezone but you want to
 # ensure that the timers are triggered based on your local time.
 # See the example below:
-# apt_daily_upgrade_timer_on_calendar: "*-*-* 06:00 America/Sao_Paulo"
-apt_daily_upgrade_timer_randomized_delay_sec: 60m
+# untnd_pgrds__apt_daily_upgrade_timer_on_calendar: "*-*-* 06:00 America/Sao_Paulo"
+untnd_pgrds__apt_daily_upgrade_timer_randomized_delay: 60m
 
 # +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
@@ -31,11 +33,11 @@ apt_daily_upgrade_timer_randomized_delay_sec: 60m
 
 # APT::Periodic::Unattended-Upgrade
 # Run the "unattended-upgrade" security upgrade script every n-days (0=disabled)
-apt_periodic_unattended_upgrade: 1
+untnd_pgrds__apt_periodic_unattended_upgrade: 1
 
 # APT::Periodic::Update-Package-Lists
 # Do "apt-get update" automatically every n-days (0=disable)
-apt_periodic_update_package_lists: 1
+untnd_pgrds__apt_periodic_update_package_lists: 1
 
 # +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
@@ -44,7 +46,7 @@ apt_periodic_update_package_lists: 1
 # /etc/apt/apt.conf.d/50unattended-upgrades
 # https://github.com/mvo5/unattended-upgrades
 
-# unattended_upgrade_origins defines the origins from which packages are upgraded.
+# untnd_pgrds__origins defines the origins from which packages are upgraded.
 #
 # For Debian, this populates the 'Unattended-Upgrade::Origins-Pattern' entry:
 #
@@ -52,7 +54,7 @@ apt_periodic_update_package_lists: 1
 # Automatically upgrade packages from these origin patterns. Examples:
 # "o=Debian,a=stable", "o=Debian,a=stable-updates", "o=Debian,a=stable-backports"
 # If left unset, the value associated to the variable below will be used instead:
-# __unattended_upgrade_origins_pattern
+# __untnd_pgrds__origins_pattern
 #
 # For Ubuntu, this populates the 'Unattended-Upgrade::Allowed-Origins' entry:
 #
@@ -60,42 +62,42 @@ apt_periodic_update_package_lists: 1
 # Automatically upgrade packages from these (origin:archive) pairs. Examples:
 # "${distro_id}:${distro_codename}", "${distro_id}:${distro_codename}-security"
 # If left unset, the value associated to the variable below will be used instead:
-# __unattended_upgrade_allowed_origins
+# __untnd_pgrds__allowed_origins
 #
-# unattended_upgrade_origins: []
+# untnd_pgrds__origins: []
 
 # Unattended-Upgrade::Package-Blacklist
 # No packages that match the regular expressions in this list will be marked for upgrade. If a package A has a
 # blacklisted package B as a dependency then both packages A and B will not be upgraded. Note that it's a list
 # of regular expressions, so you may need to escape special characters like "+" as "\+".
-unattended_upgrade_package_blacklist: []
+untnd_pgrds__package_blacklist: []
 # Unattended-Upgrade::Package-Whitelist
 # Only packages that match the regular expressions in this list will be marked for upgrade. By default dependencies
 # of whitelisted packages are allowed. This can be changed to only ever allow whitelisted packages with the
 # Unattended-Upgrade::Package-Whitelist-Strict boolean option. Unattended-Upgrade::Package-Blacklist still applies,
 # thus blacklisted packages covered by the whitelist will still not be upraded nor will be installed or upgraded as
 # dependencies of whitelisted packages.
-unattended_upgrade_package_whitelist: []
+untnd_pgrds__package_whitelist: []
 # Ubuntu specific
 # Unattended-Upgrade::DevRelease
 # This option controls whether the development release of Ubuntu will be upgraded automatically.
 # Valid values are "true", "false", and "auto".
-unattended_upgrade_dev_release: auto
+untnd_pgrds__dev_release: auto
 
 # Acquire::http::Dl-Limit
 # Use the APT bandwidth limit feature.
-# This example would limit the download speed to 70kb/sec: acquire_http_dl_limit: '70'
-acquire_http_dl_limit: false
+# This example would limit the download speed to 70kb/sec: untnd_pgrds__acquire_http_dl_limit: '70'
+untnd_pgrds__acquire_http_dl_limit: false
 
 # Dpkg::Options
 # Set dpkg options that take effect during unattended upgrades. Configuration file changes can block installation
 # of certain packages. Passing the flags "--force-confdef" and "--force-confold" will ensure updates are applied
 # and old configuration files are preserved.
 # Example:
-# dpkg_options:
+# untnd_pgrds__dpkg_options:
 #   - "--force-confdef"
 #   - "--force-confold"
-dpkg_options: false
+untnd_pgrds__dpkg_options: false
 
 # Unattended-Upgrade::Allow-APT-Mark-Fallback
 # When APT fails to mark a package to be upgraded or installed try adjusting candidates of related packages to help
@@ -104,100 +106,100 @@ dpkg_options: false
 # default, except on Debian's sid release because uninstallable packages are frequent there. Disabling the fallback
 # speeds up unattended-upgrades when there are uninstallable packages at the expense of rarely keeping back packages
 # which could be upgraded or installed.
-unattended_upgrade_allow_apt_mark_fallback: true
+untnd_pgrds__allow_apt_mark_fallback: true
 
 # Unattended-Upgrade::Allow-downgrade
 # Allow package downgrade if Pin-Priority exceeds 1000.
-unattended_upgrade_allow_downgrade: false
+untnd_pgrds__allow_downgrade: false
 
 # Unattended-Upgrade::AutoFixInterruptedDpkg
 # This option allows you to control if on a unclean dpkg exit unattended-upgrades will automatically run
 # dpkg --force-confold --configure -a. The default is 'true', to ensure updates keep getting installed.
-unattended_upgrade_auto_fix_interrupted_dpkg: true
+untnd_pgrds__auto_fix_interrupted_dpkg: true
 
 # Unattended-Upgrade::Automatic-Reboot
 # Automatically reboot *WITHOUT CONFIRMATION* if the file /var/run/reboot-required is found after the upgrade.
-unattended_upgrade_automatic_reboot: false
+untnd_pgrds__automatic_reboot: false
 
 # Unattended-Upgrade::Automatic-Reboot-Time
 # If automatic reboot is enabled and needed, reboot at the specific time instead of immediately. Default value is 'now'.
-unattended_upgrade_automatic_reboot_time: false
+untnd_pgrds__automatic_reboot_time: false
 
 # Unattended-Upgrade::Automatic-Reboot-WithUsers
 # Automatically reboot even if there are users currently logged in when Unattended-Upgrade::Automatic-Reboot is set to true.
-unattended_upgrade_automatic_reboot_with_users: true
+untnd_pgrds__automatic_reboot_with_users: true
 
 # Unattended-Upgrade::Debug
 # Print debugging information both in unattended-upgrades and in unattended-upgrade-shutdown.
-unattended_upgrade_debug: false
+untnd_pgrds__debug: false
 
 # Unattended-Upgrade::InstallOnShutdown
 # Install all updates when the machine is shutting down instead of doing it in the background while the machine is running.
 # This will - obviously - make shutdown slower.
-unattended_upgrade_install_on_shutdown: false
+untnd_pgrds__install_on_shutdown: false
 
 # Unattended-Upgrade::Keep-Debs-After-Install
 # Keep the downloaded deb packages after successful installs. By default these are removed after successful installs.
-unattended_upgrade_keep_debs_after_install: false
+untnd_pgrds__keep_debs_after_install: false
 
 # Unattended-Upgrade::Mail
 # Send email to this address for problems or packages upgrades. If empty or unset then no email is sent, make sure that you
 # have a working mail setup on your system. A package that provides 'mailx' must be installed.
-unattended_upgrade_mail: false
+untnd_pgrds__mail: false
 
 # Unattended-Upgrade::MailReport
 # Set this value to one of: "always", "only-on-error" or "on-change".  If this is not set, then any legacy boolean
 # MailOnlyOnError value is used to chose between "only-on-error" and "on-change".
-unattended_upgrade_mail_report: false
+untnd_pgrds__mail_report: false
 
 # Unattended-Upgrade::MinimalSteps
 # Split the upgrade into the smallest possible chunks so that they can be interrupted with SIGTERM. This makes the upgrade
 # a bit slower but it has the benefit that shutdown while a upgrade is running is possible (with a small delay).
-unattended_upgrade_minimal_steps: true
+untnd_pgrds__minimal_steps: true
 
 # Unattended-Upgrade::OnlyOnACPower
 # Download and install upgrades only on AC power. (i.e. skip or gracefully stop updates on battery)
-unattended_upgrade_only_on_ac_power: false
+untnd_pgrds__only_on_ac_power: false
 
 # Unattended-Upgrade::Package-Whitelist-Strict
 # When set, allow only packages in Unattended-Upgrade::Package-Whitelist to be upgraded. This means that you also need to
 # list all the dependencies of a whitelisted package. Example: if A depends on B and only A is whitelisted, it will be held back.
-unattended_upgrade_package_whitelist_strict: false
+untnd_pgrds__package_whitelist_strict: false
 
 # Unattended-Upgrade::Remove-New-Unused-Dependencies
 # Do automatic removal of newly unused dependencies after the upgrade.
-unattended_upgrade_remove_new_unused_dependencies: true
+untnd_pgrds__remove_new_unused_dependencies: true
 
 # Unattended-Upgrade::Remove-Unused-Dependencies
 # Do automatic removal of unused packages after the upgrade (equivalent to apt-get autoremove).
-unattended_upgrade_remove_unused_dependencies: false
+untnd_pgrds__remove_unused_dependencies: false
 
 # Unattended-Upgrade::Remove-Unused-Kernel-Packages
 # Remove unused automatically installed kernel-related packages (kernel images, kernel headers and kernel version locked tools).
-unattended_upgrade_remove_unused_kernel_packages: false
+untnd_pgrds__remove_unused_kernel_packages: false
 
 # Unattended-Upgrade::Sender
 # Use the specified value in the "From" field of outgoing mails. Default value is 'root'.
-unattended_upgrade_sender: false
+untnd_pgrds__sender: false
 
 # Unattended-Upgrade::Skip-Updates-On-Metered-Connections
 # Download and install upgrades only on non-metered connection (i.e. skip or gracefully stop updates on a metered connection).
-unattended_upgrade_skip_updates_on_metered_connections: false
+untnd_pgrds__skip_updates_on_metered_connections: false
 
 # Unattended-Upgrade::SyslogEnable
 # Enable logging to syslog. Default is 'false'.
-unattended_upgrade_syslog_enable: false
+untnd_pgrds__syslog_enable: false
 
 # Unattended-Upgrade::SyslogFacility
 # Specify syslog facility. Default is 'daemon'.
-unattended_upgrade_syslog_facility: false
+untnd_pgrds__syslog_facility: false
 
 # Unattended-Upgrade::Update-Days
 # Set the days of the week that updates should be applied. The days can be specified as localized abbreviated or full
 # names or as integers where "0" is Sunday, "1" is Monday ... Example: apply updates only on Monday and Friday:
-# unattended_upgrade_update_days: '{"Mon"; "Fri"}'
-unattended_upgrade_update_days: false
+# untnd_pgrds__update_days: '{"Mon"; "Fri"}'
+untnd_pgrds__update_days: false
 
 # Unattended-Upgrade::Verbose
 # Verbose logging.
-unattended_upgrade_verbose: false
+untnd_pgrds__verbose: false
