@@ -49,6 +49,7 @@ If you want to install the security patches between 0500 and 0600 AM and automat
 This role was tested on and is confirmed to work with the following Linux distributions:
 
 - `Debian 12`
+- `Debian 13`
 - `Ubuntu 22.04`
 - `Ubuntu 24.04`
 
