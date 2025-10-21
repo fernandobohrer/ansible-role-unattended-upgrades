@@ -1,0 +1,6 @@
+---
+__untnd_pgrds__origins_pattern:
+  - origin=Debian,codename=${distro_codename}-security,label=Debian-Security
+
+__untnd_pgrds__specific_options:
+  - Unattended-Upgrade::Origins-Pattern
