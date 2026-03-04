@@ -8,7 +8,7 @@ Keeping track and installing security updates and patches can be challenging. It
 
 ## 📑 Role Variables
 
-Check [here][01].
+Check [defaults/main.yml][01].
 
 ## 🧰 Dependencies
 
