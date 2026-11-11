@@ -31,6 +31,14 @@
     update_cache: true
     cache_valid_time: "{{ apt_cache_valid_time }}"
 
+- name: Ensure apt-daily and apt-daily-upgrade services are unmasked
+  ansible.builtin.systemd:
+    name: "{{ item }}"
+    masked: false
+  with_items:
+    - apt-daily.service
+    - apt-daily-upgrade.service
+
 - name: Ensure apt-daily and apt-daily-upgrade timers are started and enabled
   ansible.builtin.systemd:
     name: "{{ item }}"
